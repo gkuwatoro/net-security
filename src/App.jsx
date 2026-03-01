@@ -24,7 +24,7 @@ const learningSteps = [
       { text: "URLが学校の公式と少し違うことに気づいたため、そのグループチャット内で「このURLは本物ですか？」と先生に直接返信して確認する。", isCorrect: false },
       { text: "フォームには入力せず、先生に直接電話や対面で確認するか、学校の公式窓口に問い合わせる。", isCorrect: true }
     ],
-    explanation: "【正解は3】\n一見、2番の「チャット内で確認する」も良さそうに見えますが、グループチャット自体（または先生のアカウント）が既に乗っ取られている場合、犯人が「本物だよ、早く入力して」と返信してくる可能性があります。",
+    explanation: "【正解は3】\n一見、2番の「チャット内で確認する」も良さそうに見えますが、グループチャット自体（または先生のアカウント）が既に乗っ取られている場合、犯人が「本物だよ、早く入力して」と返信してくる可能性があります。\n\n【ソーシャルエンジニアリングとは？】\nネットワークのシステム的な弱点ではなく、人間の心理的な隙や行動のミスを突いて、パスワードなどの機密情報を盗み出す手口の総称です。\n\n■ 代表的なケース\n・なりすまし：上司や友人、システム管理者を装って電話やメールで情報を聞き出す。\n・緊急性の演出：「今すぐ対応しないとアカウントが停止される」と焦らせて冷静な判断力を奪う。\n・覗き見（ショルダーハッキング）：入力中のパスワードを背後や肩越しから盗み見る。\n・トラッシング：ゴミ箱に捨てられたメモや書類からパスワードを見つけ出す。",
     illustration: () => (
       <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 p-6 bg-white rounded-xl shadow-sm border border-orange-100 mt-4">
         <div className="text-center flex flex-col items-center">
@@ -81,7 +81,7 @@ const learningSteps = [
       { text: "共用PCにマルウェアが仕掛けられている場合、ログイン後の「操作中の画面」そのものを乗っ取られ、メールを見られる危険がある。", isCorrect: true },
       { text: "共用PCで入力したパスワードは電源を切ればメモリから消去されるため、使用後に必ず再起動すればリスクは排除できる。", isCorrect: false }
     ],
-    explanation: "【正解は2】\n二段階認証は「他の端末からの新規ログイン」を防ぐのには極めて有効ですが、今まさに使っている「そのパソコン自体」が悪意のあるプログラムに汚染されていれば、認証を突破した後の画面をそのまま盗み見られたり操作されたりしてしまいます。",
+    explanation: "【正解は2】\n二段階認証は「他の端末からの新規ログイン」を防ぐのには極めて有効ですが、今まさに使っている「そのパソコン自体」が悪意のあるプログラムに汚染されていれば、認証を突破した後の画面をそのまま盗み見られたり操作されたりしてしまいます。\n\n【キーロガーとは？】\nパソコンやスマホのキーボードで入力した内容（キーストローク）をすべて記録し、外部の悪意ある者へ送信する仕組みのことです。パスワードだけでなく、検索履歴やメッセージ内容まで筒抜けになります。\n\n■ どうやって仕込まれる？\n・ソフトウェア型：不審なメールの添付ファイルを開いたり、危険なWebサイトからフリーソフトをダウンロードした際に、裏でこっそりインストールされるケースが一般的です。\n・ハードウェア型：学校やネットカフェなどの共用パソコンのUSB端子に、キーボードのケーブルと見せかけて物理的な小型装置（記録装置）が直接取り付けられているケースもあります。",
     illustration: () => (
       <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 p-6 bg-white rounded-xl shadow-sm border border-blue-100 mt-4">
         <div className="relative text-center flex flex-col items-center">
@@ -143,7 +143,7 @@ const learningSteps = [
       { text: "通信内容（パスワード等）は守られるが、「どのWebサイトにアクセスしているか」という接続先の情報までは暗号化されず知られる可能性がある。", isCorrect: true },
       { text: "Wi-Fi自体にパスワードがないため、HTTPSの暗号化は無効化され、パスワードも通信内容もすべて第三者に筒抜けになる。", isCorrect: false }
     ],
-    explanation: "【正解は2】\nHTTPS（TLS暗号化）は、送受信する「中身（ペイロード）」を強力に暗号化しますが、手紙の「宛名」にあたる情報（アクセス先のドメイン名やIPアドレスなど）までは暗号化されないことが多いのです。",
+    explanation: "【正解は2】\nHTTPS（TLS暗号化）は、送受信する「中身（ペイロード）」を強力に暗号化しますが、手紙の「宛名」にあたる情報（アクセス先のドメイン名やIPアドレスなど）までは暗号化されないことが多いのです。\n\n【Wi-Fiの暗号化とは？】\nWi-Fiの暗号化（WPA2やWPA3など）は、あなたの端末とWi-Fiルーター間の「空間（電波）の通信」を保護する仕組みです。パスワード入力が不要な無料Wi-Fi（オープンネットワーク）は、この区間が暗号化されておらず、専用のソフトを使えば誰でも電波を傍受できてしまいます。HTTPSによるWebサイトとの暗号化と、Wi-Fiの暗号化は別物であり、両方のセキュリティが働いて初めて安全な通信と言えます。",
     illustration: () => (
       <div className="flex flex-col items-center p-6 bg-white rounded-xl shadow-sm border border-purple-100 relative">
         <div className="flex justify-between w-full max-w-md items-center mb-4">
