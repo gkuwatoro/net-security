@@ -4,12 +4,13 @@ import {
   Castle, ArrowRight, CheckCircle2, XCircle, RefreshCw, KeyRound, 
   Eye, ShieldAlert, ChevronRight, Monitor, Play, Award, Sparkles,
   Keyboard, FileText, MousePointer2, Home, BadgeCheck, Key,
-  Server, Skull, Zap, Network
+  Server, Skull, Zap, Network, PhoneCall, Ticket, Route, FileQuestion,
+  BookOpen
 } from 'lucide-react';
 
 // --- データ定義 ---
 
-// 1. 学習パートの各ステップデータ
+// 1. 学習パートの各ステップデータ（難易度UP・詳細解説追加）
 const learningSteps = [
   {
     title: "人間の隙を突く",
@@ -17,30 +18,56 @@ const learningSteps = [
     icon: UserX,
     color: "bg-orange-500",
     lightColor: "bg-orange-50",
-    question: "親友からLINEで「自分のスマホの充電が切れたから、一時的に君のSNSアカウントでログインさせて」と言われました。あなたならどうする？",
+    question: "あなたが所属する部活の連絡網（LINE等）で、顧問の先生から「至急、大会エントリー確認のため、各自の生徒ポータルIDとパスワードをこのフォームに入力しろ。期限は本日中」とURLが送られてきました。最も適切な行動はどれですか？",
     options: [
-      { text: "親友が困っているなら、すぐに貸す", isCorrect: false },
-      { text: "理由を詳しく聞いてから貸す", isCorrect: false },
-      { text: "いくら親友でも絶対に貸さない", isCorrect: true }
+      { text: "顧問の先生からの指示であり、期限も迫っているため、速やかにフォームに入力する。", isCorrect: false },
+      { text: "URLが学校の公式と少し違うことに気づいたため、そのグループチャット内で「このURLは本物ですか？」と先生に直接返信して確認する。", isCorrect: false },
+      { text: "フォームには入力せず、先生に直接電話や対面で確認するか、学校の公式窓口に問い合わせる。", isCorrect: true }
     ],
-    explanation: "【正解は「絶対に貸さない」】\nシステムではなく「人間の心理的な隙」を突いてパスワードを盗み出す手口を「ソーシャルエンジニアリング」と呼びます。親友のアカウントが既に乗っ取られていて、犯人が親友になりすましているかもしれません。\n\n🎭 代表的な手口の例\n・なりすまし：友人、学校の先生、サービスの管理者を装ってパスワードや個人情報を聞き出す。\n・緊急性の演出：「今すぐ対応しないとアカウントが停止される」と焦らせて、冷静な判断を奪う。\n・覗き見・ゴミあさり：肩越しに入力を盗み見たり（ショルダーハッキング）、捨てられたメモからパスワードを見つけ出す（トラッシング）。",
+    explanation: "【正解は3】\n一見、2番の「チャット内で確認する」も良さそうに見えますが、グループチャット自体（または先生のアカウント）が既に乗っ取られている場合、犯人が「本物だよ、早く入力して」と返信してくる可能性があります。",
     illustration: () => (
-      <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 p-6 bg-white rounded-xl shadow-sm border border-orange-100">
+      <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 p-6 bg-white rounded-xl shadow-sm border border-orange-100 mt-4">
         <div className="text-center flex flex-col items-center">
           <Smartphone className="w-12 h-12 text-gray-700 mb-2" />
-          <p className="text-sm font-bold text-gray-700">偽の親友</p>
-          <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded mt-1">中身は悪者かも！</span>
+          <p className="text-sm font-bold text-gray-700">乗っ取られた先生</p>
+          <span className="text-[10px] bg-red-100 text-red-600 px-2 py-1 rounded mt-1 font-bold">犯人が操作中</span>
         </div>
-        <div className="flex flex-col items-center">
-          <span className="text-xs text-gray-500 mb-1">パスワード教えて！</span>
-          <ArrowRight className="text-orange-400 w-8 h-8 animate-pulse" />
+        <div className="flex flex-col items-center px-4">
+          <span className="text-xs text-red-500 font-bold mb-1">本物だよ！</span>
+          <ArrowRight className="text-red-400 w-8 h-8 rotate-180 mb-1" />
+          <span className="text-xs text-gray-500 mb-1">これ本物ですか？</span>
+          <ArrowRight className="text-gray-400 w-8 h-8" />
         </div>
         <div className="text-center flex flex-col items-center">
-          <Lock className="w-12 h-12 text-green-500 mb-2" />
-          <p className="text-sm font-bold text-gray-700">あなたの大切なアカウント</p>
+          <Smartphone className="w-12 h-12 text-blue-500 mb-2" />
+          <p className="text-sm font-bold text-gray-700">あなた</p>
         </div>
       </div>
-    )
+    ),
+    detailedExplanation: {
+      title: "OOB（Out-of-Band：帯域外）通信の重要性",
+      content: "標的の人間関係や状況を事前に入念に調べ上げ、極めて自然な文面で騙す手口を「スピアフィッシング」や「BEC（ビジネスメール詐欺）」と呼びます。\nこのような巧妙な攻撃を防ぐには、連絡を受けた手段（今回ならLINE等のチャット）とは「全く別の手段（電話や直接対面など）」で事実確認を行うことが重要です。これをセキュリティ用語で「OOB（帯域外）通信による検証」と呼びます。",
+      illustration: () => (
+        <div className="bg-orange-50 p-6 rounded-lg border border-orange-200 flex flex-col items-center">
+           <div className="flex items-center space-x-6">
+             <div className="flex flex-col items-center">
+               <span className="text-xs font-bold text-red-500 mb-2">危険な確認（同じ経路）</span>
+               <Smartphone className="w-10 h-10 text-red-400" />
+               <ArrowRight className="w-6 h-6 text-red-400 my-2 rotate-90" />
+               <Smartphone className="w-10 h-10 text-red-400" />
+             </div>
+             <div className="h-24 w-px bg-orange-300"></div>
+             <div className="flex flex-col items-center">
+               <span className="text-xs font-bold text-green-600 mb-2">安全な確認（OOB）</span>
+               <Smartphone className="w-10 h-10 text-gray-500" />
+               <PhoneCall className="w-6 h-6 text-green-500 my-2 animate-pulse" />
+               <UserX className="w-10 h-10 text-green-500" />
+             </div>
+           </div>
+           <p className="text-xs text-gray-600 mt-4 text-center">犯人はチャットは支配できても、先生の肉声や対面までは偽装できない。</p>
+        </div>
+      )
+    }
   },
   {
     title: "入力する瞬間",
@@ -48,54 +75,61 @@ const learningSteps = [
     icon: KeyRound,
     color: "bg-blue-500",
     lightColor: "bg-blue-50",
-    question: "学校の図書室やネットカフェなど、共用のパソコンで自分のアカウントにログインする際に、潜んでいる危険とは？",
+    question: "あなたは学校の図書室の共用パソコンで自分のWebメールを見る必要があります。二段階認証（スマホへのSMS通知）は設定済みです。この状況におけるセキュリティ上の最も論理的なリスクはどれですか？",
     options: [
-      { text: "共用パソコンは管理されているから特に危険はない", isCorrect: false },
-      { text: "キーボードで入力した文字がすべて裏で記録されているかも", isCorrect: true },
-      { text: "画面が大きくて綺麗だからむしろ安全", isCorrect: false }
+      { text: "二段階認証があるため、万が一パスワードを盗まれてもスマホがない限り犯人はログインできず、安全に利用できる。", isCorrect: false },
+      { text: "共用PCにマルウェアが仕掛けられている場合、ログイン後の「操作中の画面」そのものを乗っ取られ、メールを見られる危険がある。", isCorrect: true },
+      { text: "共用PCで入力したパスワードは電源を切ればメモリから消去されるため、使用後に必ず再起動すればリスクは排除できる。", isCorrect: false }
     ],
-    explanation: "【正解は「入力が記録されているかも」】\n「キーロガー (Keylogger)」とは、キーボードの入力（打鍵）をすべて記録する悪意のある仕組みです。パスワードだけでなく、検索履歴やメッセージ内容まで筒抜けになります。\n\n⚠️ キーロガーの種類と対策\n・ソフトウェア型：気付かないうちにパソコン内に仕込まれるプログラム。\n・ハードウェア型：パソコンのUSB端子やキーボードのケーブルの間に物理的に接続される小さな部品。\n・対策：共用パソコンでは重要なアカウント（SNSやネットバンキング）にログインしないのが鉄則です。",
+    explanation: "【正解は2】\n二段階認証は「他の端末からの新規ログイン」を防ぐのには極めて有効ですが、今まさに使っている「そのパソコン自体」が悪意のあるプログラムに汚染されていれば、認証を突破した後の画面をそのまま盗み見られたり操作されたりしてしまいます。",
     illustration: () => (
       <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 p-6 bg-white rounded-xl shadow-sm border border-blue-100 mt-4">
         <div className="relative text-center flex flex-col items-center">
-          <Monitor className="w-12 h-12 text-gray-700 mb-2 z-10" />
-          <div className="flex items-center space-x-1 mb-1 z-10 bg-white px-2 py-1 rounded shadow-sm border border-gray-200">
-            <span className="text-sm font-mono text-gray-800">P</span>
-            <span className="text-sm font-mono text-gray-800">A</span>
-            <span className="text-sm font-mono text-gray-800">S</span>
-            <span className="text-sm font-mono text-gray-800 animate-pulse">*</span>
-            <span className="text-sm font-mono text-gray-800 animate-pulse delay-75">*</span>
-          </div>
-          <p className="text-sm font-bold text-gray-700 mt-1">共用パソコン</p>
+          <Monitor className="w-12 h-12 text-blue-600 mb-2 z-10" />
+          <div className="absolute top-2 right-2 z-20"><ShieldCheck className="w-5 h-5 text-green-500 bg-white rounded-full"/></div>
+          <p className="text-sm font-bold text-gray-700 mt-1">二段階認証クリア</p>
           
-          {/* キーロガーの記録メカニズム */}
-          <div className="absolute top-12 -right-4 md:-right-8 bg-red-50 p-2 rounded-lg border border-red-300 shadow-md z-20">
-            <div className="flex items-center text-xs text-red-600 font-bold mb-1">
-              <Keyboard className="w-4 h-4 mr-1 animate-pulse" />
-              <span>入力記録中</span>
-            </div>
-            <div className="text-left text-[10px] font-mono text-gray-600 bg-white p-1 rounded border border-gray-200 leading-tight">
-              {'>'} id_input<br/>
-              {'>'} P,A,S,S...<br/>
-              <span className="text-red-500 animate-pulse">Saving...</span>
+          <div className="absolute -bottom-4 bg-red-50 p-2 rounded-lg border border-red-300 shadow-md z-20 w-40">
+            <div className="flex items-center justify-center text-[10px] text-red-600 font-bold mb-1">
+              <Eye className="w-4 h-4 mr-1 animate-pulse" />
+              <span>画面をそのまま転送中</span>
             </div>
           </div>
         </div>
         
         <div className="flex flex-col items-center mt-6 md:mt-0 px-4">
-          <span className="text-xs text-red-500 font-bold mb-2">ログファイルを送信</span>
-          <div className="flex items-center opacity-80 animate-[pulse_1.5s_ease-in-out_infinite]">
-             <FileText className="w-6 h-6 text-red-500 mr-1" />
-             <ArrowRight className="text-red-400 w-6 h-6" />
-          </div>
+          <ArrowRight className="text-red-400 w-8 h-8" />
         </div>
         
         <div className="text-center flex flex-col items-center">
-          <UserX className="w-12 h-12 text-red-500 mb-2" />
-          <p className="text-sm font-bold text-gray-700">遠くの悪者</p>
+          <Monitor className="w-12 h-12 text-red-500 mb-2" />
+          <p className="text-sm font-bold text-gray-700">犯人のモニター</p>
+          <span className="text-[10px] font-bold text-red-600 mt-1">「そのまま見えちゃうね」</span>
         </div>
       </div>
-    )
+    ),
+    detailedExplanation: {
+      title: "MitB攻撃とセッション・ハイジャック",
+      content: "端末（エンドポイント）自体が汚染されている場合に行われる攻撃を「Man-in-the-Browser (MitB) 攻撃」と呼びます。ブラウザの通信内容を暗号化される前（または復号された後）に盗み見ます。\nまた、ログイン成功後に発行される「通行証（セッションCookie）」を盗み出す「セッション・ハイジャック」という手口もあります。通行証さえあれば、犯人はIDやパスワード、二段階認証すら不要で、あなたになりすましてアクセスできてしまいます。",
+      illustration: () => (
+        <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+           <div className="bg-white p-3 rounded shadow border border-gray-200 flex flex-col items-center">
+             <Ticket className="w-8 h-8 text-yellow-500 mb-1" />
+             <span className="text-[10px] font-bold">セッションCookie</span>
+             <span className="text-[8px] text-gray-500">(ログイン済みの証拠)</span>
+           </div>
+           <div className="flex flex-col items-center">
+             <span className="text-xs font-bold text-red-500 mb-1">丸ごと盗む</span>
+             <ArrowRight className="w-6 h-6 text-red-500" />
+           </div>
+           <div className="bg-white p-3 rounded shadow border border-red-200 flex flex-col items-center relative">
+             <UserX className="w-8 h-8 text-red-500 mb-1" />
+             <Ticket className="w-5 h-5 text-yellow-500 absolute top-1 right-1" />
+             <span className="text-[10px] font-bold text-red-600">パスワードなしで侵入</span>
+           </div>
+        </div>
+      )
+    }
   },
   {
     title: "通信の途中",
@@ -103,28 +137,58 @@ const learningSteps = [
     icon: Wifi,
     color: "bg-purple-500",
     lightColor: "bg-purple-50",
-    question: "カフェのパスワードなし無料Wi-Fiで、暗号化されていないサイト（アドレスが http:// のサイト）にログインするとどうなる？",
+    question: "カフェの無料Wi-Fi（パスワードなし）に接続しました。アクセスするSNSのURLは「https://」と鍵マークがあり暗号化されています。この状態のセキュリティリスクについて、正しい認識はどれですか？",
     options: [
-      { text: "パスワードなどの通信内容が、同じWi-Fiにいる別の人に丸見えになる", isCorrect: true },
-      { text: "カフェの店員さんにだけ通信内容が見られる", isCorrect: false },
-      { text: "通信速度が速くなるだけで特に問題はない", isCorrect: false }
+      { text: "HTTPSで暗号化されているため、通信内容も「どのサイトにアクセスしているか」も第三者には完全に分からなくなる。", isCorrect: false },
+      { text: "通信内容（パスワード等）は守られるが、「どのWebサイトにアクセスしているか」という接続先の情報までは暗号化されず知られる可能性がある。", isCorrect: true },
+      { text: "Wi-Fi自体にパスワードがないため、HTTPSの暗号化は無効化され、パスワードも通信内容もすべて第三者に筒抜けになる。", isCorrect: false }
     ],
-    explanation: "【正解は「通信内容が丸見えになる」】\n暗号化されていない通信は、パスワードを「ハガキ」に書いて送るようなものです。同じ無料Wi-Fiに接続している悪意のある人には、通信内容が筒抜け（ネットワーク盗聴）になってしまいます。\n\n🛡️ 安全なWi-Fiの見分け方\n安全なWi-Fiは、通信内容が暗号化（WPA2やWPA3といった規格）されています。\n・確認方法：スマホやPCのWi-Fi接続画面で「鍵マーク」がついているか確認しましょう。接続時にパスワード（暗号化キー）の入力が求められるものが暗号化されたWi-Fiです。\n・注意点：Wi-Fiが安全でも、Webサイト自体が暗号化されていないと危険です。ブラウザのアドレスバーにも鍵マーク（https://）があるか必ず確認しましょう。",
+    explanation: "【正解は2】\nHTTPS（TLS暗号化）は、送受信する「中身（ペイロード）」を強力に暗号化しますが、手紙の「宛名」にあたる情報（アクセス先のドメイン名やIPアドレスなど）までは暗号化されないことが多いのです。",
     illustration: () => (
       <div className="flex flex-col items-center p-6 bg-white rounded-xl shadow-sm border border-purple-100 relative">
         <div className="flex justify-between w-full max-w-md items-center mb-4">
-          <div className="text-center"><Smartphone className="w-10 h-10 text-gray-700 mx-auto"/><p className="text-xs mt-1">あなた</p></div>
-          <div className="flex-1 border-t-2 border-dashed border-purple-300 relative mx-4">
-            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-white px-2 text-xs text-purple-600 font-bold border border-purple-200 rounded">丸見えのパスワード</div>
+          <div className="text-center"><Smartphone className="w-10 h-10 text-gray-700 mx-auto"/></div>
+          <div className="flex-1 relative mx-4">
+            <div className="w-full border-t-4 border-green-400 rounded"></div>
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-slate-800 px-2 py-1 flex items-center rounded shadow">
+               <span className="text-[10px] font-bold text-white mr-2">宛先: sns.example.com</span>
+               <Lock className="w-3 h-3 text-green-400 mr-1"/>
+               <span className="text-[10px] text-gray-400">********</span>
+            </div>
           </div>
-          <div className="text-center"><Wifi className="w-10 h-10 text-gray-700 mx-auto"/><p className="text-xs mt-1">無料Wi-Fi</p></div>
+          <div className="text-center"><Server className="w-10 h-10 text-gray-700 mx-auto"/></div>
         </div>
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-red-500">
-           <Eye className="w-6 h-6 animate-bounce" />
-           <p className="text-xs font-bold">同じWi-Fiにいる悪者が覗き見！</p>
+        <div className="flex flex-col items-center text-red-500 mt-2 bg-red-50 p-2 rounded">
+           <Eye className="w-5 h-5 mb-1" />
+           <p className="text-[10px] font-bold">中身は見えないが「SNSを見ている」ことはバレる</p>
         </div>
       </div>
-    )
+    ),
+    detailedExplanation: {
+      title: "暗号化通信の限界とメタデータ",
+      content: "手紙に例えると、HTTPSは「絶対に開けられない封筒（暗号化）」です。しかし、郵便局員（ネットワーク管理者や盗聴者）が配達するためには、封筒の表に書かれた「宛名（メタデータ）」を読む必要があります。\n通信の世界では、IPアドレスや、TLS通信の初期段階で送られる「SNI（Server Name Indication）」という情報が平文（暗号化されていない状態）で流れるため、どのサーバーと通信しているかが漏れてしまいます。これを防ぐにはVPN（仮想プライベートネットワーク）等を利用して、通信経路全体をトンネリング（別の大きな封筒に入れる）する必要があります。",
+      illustration: () => (
+        <div className="bg-purple-50 p-6 rounded-lg border border-purple-200 flex flex-col items-center">
+           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+             {/* 通常のHTTPS */}
+             <div className="bg-white border-2 border-green-400 p-2 rounded flex items-center shadow">
+               <span className="text-[10px] font-mono text-gray-600 mr-2 border-r pr-2">SNI: sns.com<br/>(平文)</span>
+               <span className="text-[10px] font-mono text-green-600 bg-green-50 px-1 rounded"><Lock className="w-3 h-3 inline mr-1"/>暗号化データ</span>
+             </div>
+             
+             <ArrowRight className="w-6 h-6 text-gray-400 hidden md:block" />
+             
+             {/* VPNの場合 */}
+             <div className="bg-slate-700 border-2 border-slate-800 p-3 rounded flex items-center shadow text-white">
+               <span className="text-[10px] font-mono mr-2 border-r border-slate-500 pr-2">宛先: VPNサーバー</span>
+               <div className="bg-slate-600 p-1 rounded border border-slate-500 border-dashed">
+                 <span className="text-[10px] font-mono text-gray-300">SNIも中身も全て暗号化</span>
+               </div>
+             </div>
+           </div>
+        </div>
+      )
+    }
   },
   {
     title: "コンピュータの内部",
@@ -132,74 +196,56 @@ const learningSteps = [
     icon: Mail,
     color: "bg-red-500",
     lightColor: "bg-red-50",
-    question: "心当たりのない不審なメールや添付ファイル。絶対に開いてはいけない最大の理由は？",
+    question: "友人から「昨日の写真アップしたよ！」とURLが送られ、電話で確認すると「確かに送った」とのこと。しかし、ダウンロードしたファイル名は「photo_2026.jpg.exe」でした。適切な判断はどれですか？",
     options: [
-      { text: "パソコンの容量がいっぱいになってしまうから", isCorrect: false },
-      { text: "迷惑メールの送信者に「このメールアドレスは使われている」とバレるから", isCorrect: false },
-      { text: "見えないところでパスワードを盗み出すプログラムが動き出すから", isCorrect: true }
+      { text: "本人が送ったと確認できたので安全だ。拡張子が .exe なのは写真を自己解凍して見やすくするツールだからだろう。", isCorrect: false },
+      { text: "友人自身は安全と思って送っているが、友人のPCが感染しており、勝手にウイルス（.exe）を写真に偽装してばらまいている可能性が高いため開かない。", isCorrect: true },
+      { text: "最近のスマホで撮影された高画質写真の標準フォーマットが .exe なので、そのまま開いて問題ない。", isCorrect: false }
     ],
-    explanation: "【正解は「パスワードを盗み出すプログラムが動くから」】\n不審なメールのリンクを開いたり、添付ファイルをダウンロードすると、「マルウェア（悪意のあるソフトウェア）」がパソコン内に潜り込みます。\n\n🦠 埋め込まれたマルウェアが裏でやること\n・情報窃取：あなたが保存しているパスワードや個人情報をこっそり探し出し、外部の犯人に送信します。\n・キーロガー化：キーボードの入力内容をすべて監視・記録します。\n・ランサムウェア化：大切なファイルを勝手に暗号化し、「元に戻したければお金を払え」と脅迫してきます。",
+    explanation: "【正解は2】\n送信者が間違いなく本人であっても、その本人のパソコンが既にマルウェアに感染しており、本人が意図せず（または騙されて）マルウェアを拡散させられているケースが多々あります。",
     illustration: () => (
       <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-6 p-6 bg-white rounded-xl shadow-sm border border-red-100 mt-4">
-        {/* 不審なメール */}
-        <div className="w-full md:w-1/2 bg-gray-50 rounded-lg border border-gray-200 overflow-hidden shadow-sm relative">
-          <div className="bg-gray-200 px-3 py-2 border-b border-gray-300 flex items-center">
-            <Mail className="w-4 h-4 text-gray-600 mr-2" />
-            <span className="text-xs font-bold text-gray-700">受信トレイ</span>
-          </div>
-          <div className="p-4">
-            <p className="text-xs text-gray-500 mb-1">差出人: admin@fake-security-alert.com</p>
-            <p className="text-sm font-bold text-red-600 mb-2">【重要】アカウント異常ログインのお知らせ</p>
-            <p className="text-xs text-gray-700 leading-relaxed mb-4">
-              お客様のアカウントに不正なアクセスが確認されました。<br/>
-              安全のため、24時間以内に以下のリンクからパスワードを再設定してください。
-            </p>
-            {/* 偽のリンクボタン */}
-            <div className="relative inline-block">
-              <span className="inline-block bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded shadow">
-                今すぐ確認する
-              </span>
-              {/* クリックするカーソルのアニメーション */}
-              <MousePointer2 className="w-6 h-6 text-gray-800 absolute -bottom-3 -right-3 animate-[bounce_2s_ease-in-out_infinite] z-10" />
-            </div>
+        <div className="text-center flex flex-col items-center">
+          <UserX className="w-12 h-12 text-orange-500 mb-2" />
+          <p className="text-sm font-bold text-gray-700">友人（感染済み）</p>
+          <span className="text-[10px] text-gray-500 mt-1">「写真送るね〜」</span>
+        </div>
+        
+        <div className="flex flex-col items-center relative">
+          <ArrowRight className="text-red-400 w-12 h-12" />
+          <div className="absolute -top-6 bg-red-50 border border-red-200 p-1 rounded shadow-sm flex items-center">
+             <FileQuestion className="w-4 h-4 text-red-500 mr-1" />
+             <span className="text-[10px] font-mono font-bold text-red-700">photo.jpg.exe</span>
           </div>
         </div>
 
-        <div className="flex flex-col items-center">
-          <ArrowRight className="text-red-400 w-8 h-8 md:rotate-0 rotate-90" />
-          <span className="text-[10px] text-red-500 font-bold mt-1 bg-red-50 px-2 py-1 rounded">マルウェア侵入!</span>
-        </div>
-
-        {/* パソコン内部の様子 */}
         <div className="w-full md:w-1/3 text-center relative flex flex-col items-center border-2 border-slate-700 rounded-lg p-4 bg-slate-50">
           <Monitor className="w-12 h-12 text-slate-700 mb-2" />
           <p className="text-xs font-bold text-slate-700">あなたのPC</p>
-          
-          {/* 潜り込んだマルウェア */}
-          <div className="absolute top-2 right-2 flex flex-col items-center">
-            <AlertTriangle className="w-6 h-6 text-red-500 animate-pulse" />
-          </div>
-
-          {/* 外に送出されるパスワード */}
-          <div className="mt-4 w-full relative h-12">
-            <div className="absolute top-1/2 left-0 transform -translate-y-1/2 flex items-center animate-[ping_2s_ease-in-out_infinite] opacity-70">
-              <span className="bg-white border border-red-500 text-red-600 text-[10px] font-bold px-1 py-0.5 rounded shadow flex items-center">
-                <Lock className="w-3 h-3 mr-1"/> PASS
-              </span>
-              <ArrowRight className="w-4 h-4 text-red-500 ml-1" />
-            </div>
-            <div className="absolute top-1/2 right-0 transform -translate-y-1/2">
-               <UserX className="w-6 h-6 text-red-500" />
-            </div>
-          </div>
-          <p className="text-[10px] text-red-600 font-bold mt-2">パスワードを外部へ送信中!</p>
+          <p className="text-[10px] text-red-600 font-bold mt-2">開くと感染拡大！</p>
         </div>
       </div>
-    )
+    ),
+    detailedExplanation: {
+      title: "拡張子の偽装とサプライチェーン攻撃",
+      content: "ファイル名の最後にある「.exe」などの文字列を「拡張子」と呼び、OSはこれでファイルの種類を判断します。「.jpg.exe」のような「二重拡張子」は、一見画像（.jpg）に見せかけて、実際は実行ファイル（.exe＝プログラム）を起動させる古典的かつ危険な偽装手口です。\nまた、知人のPCだけでなく、信頼している企業の正規ソフトウェアの更新プログラムにマルウェアが仕込まれる「サプライチェーン攻撃」も近年増加しています。「誰から来たか」だけを信用するのではなく、「ファイルや振る舞いそのもの」を検証するゼロトラストの考え方が必要です。",
+      illustration: () => (
+        <div className="bg-red-50 p-6 rounded-lg border border-red-200 flex flex-col items-center">
+           <div className="flex items-center space-x-2 text-lg md:text-xl font-mono bg-white px-4 py-2 border border-gray-300 rounded shadow-inner">
+             <span className="text-gray-800">photo_2026</span>
+             <span className="text-green-600 bg-green-50 px-1 border border-green-200 rounded">.jpg</span>
+             <span className="text-red-600 bg-red-100 px-1 border border-red-300 rounded font-bold animate-pulse">.exe</span>
+           </div>
+           <p className="text-xs text-gray-600 mt-4 text-center max-w-sm">
+             Windowsの初期設定では「登録されている拡張子を表示しない」ため、単に「photo_2026.jpg」と表示されてしまい、偽装に気づきにくいという罠があります。
+           </p>
+        </div>
+      )
+    }
   }
 ];
 
-// 2. チャレンジ問題プール (ここからランダムに3問出題)
+// ... (既存の questionPool はそのまま維持します)
 const questionPool = [
   { q: "複数のサービスで同じパスワードを使い回すのはなぜ危険？", options: [{text: "覚えやすくて便利だから安全", isCorrect: false}, {text: "1つ漏れると芋づる式に全部乗っ取られるから", isCorrect: true}, {text: "パスワードが長くなりすぎるから", isCorrect: false}], explanation: "1箇所から漏れたパスワードを使って、犯人は他のサービスにも次々とログインを試みます。これを「パスワードリスト攻撃」と呼びます。" },
   { q: "カフェなどのパスワードがない無料Wi-Fiを利用する際、特に気をつけるべきことは？", options: [{text: "暗号化されていない（http://）サイトでのログインを避ける", isCorrect: true}, {text: "画面の明るさを下げて覗き見を防ぐ", isCorrect: false}, {text: "なるべく通信速度が速い席に座る", isCorrect: false}], explanation: "暗号化されていない通信は、同じWi-Fiに繋いでいる他人に丸見え（ネットワーク盗聴）になる危険があります。必ず「https://」のサイトを利用しましょう。" },
@@ -234,6 +280,7 @@ const Button = ({ children, onClick, variant = 'primary', className = "", disabl
     primary: "bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg active:scale-95",
     secondary: "bg-white text-gray-700 border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 active:scale-95",
     success: "bg-green-500 text-white hover:bg-green-600 shadow-md hover:shadow-lg active:scale-95",
+    outline: "bg-transparent text-blue-600 border-2 border-blue-600 hover:bg-blue-50 active:scale-95",
     disabled: "bg-gray-200 text-gray-400 cursor-not-allowed"
   };
   return (
@@ -277,12 +324,14 @@ const IntroScreen = ({ onStart }) => (
 const LearningScreen = ({ stepData, stepIndex, totalSteps, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [showDetailed, setShowDetailed] = useState(false); // 詳細解説のトグル状態
   const Icon = stepData.icon;
 
   // ステップが変わったら状態をリセット
   useEffect(() => {
     setSelectedOption(null);
     setShowResult(false);
+    setShowDetailed(false);
   }, [stepData]);
 
   const handleOptionClick = (index) => {
@@ -316,7 +365,8 @@ const LearningScreen = ({ stepData, stepIndex, totalSteps, onNext }) => {
           </div>
           
           <div className="p-6 md:p-8 bg-gray-50">
-            <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-start">
+            <div className="bg-blue-50 text-blue-800 text-xs font-bold px-3 py-1 rounded-full w-max mb-4">状況推論問題</div>
+            <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-start leading-relaxed">
               <span className="text-blue-500 mr-2 text-2xl leading-none">Q.</span>
               {stepData.question}
             </h3>
@@ -340,11 +390,11 @@ const LearningScreen = ({ stepData, stepIndex, totalSteps, onNext }) => {
                     key={idx}
                     onClick={() => handleOptionClick(idx)}
                     disabled={showResult}
-                    className={`w-full text-left p-4 rounded-xl font-medium transition-all duration-300 flex justify-between items-center ${btnStyle} ${!showResult && 'hover:shadow-md'}`}
+                    className={`w-full text-left p-4 rounded-xl font-medium transition-all duration-300 flex justify-between items-start ${btnStyle} ${!showResult && 'hover:shadow-md'}`}
                   >
-                    <span>{opt.text}</span>
-                    {showStatus && opt.isCorrect && <CheckCircle2 className="text-green-500 w-6 h-6 flex-shrink-0" />}
-                    {showStatus && isSelected && !opt.isCorrect && <XCircle className="text-red-500 w-6 h-6 flex-shrink-0" />}
+                    <span className="leading-relaxed flex-1 pr-4">{opt.text}</span>
+                    {showStatus && opt.isCorrect && <CheckCircle2 className="text-green-500 w-6 h-6 flex-shrink-0 mt-1" />}
+                    {showStatus && isSelected && !opt.isCorrect && <XCircle className="text-red-500 w-6 h-6 flex-shrink-0 mt-1" />}
                   </button>
                 );
               })}
@@ -354,12 +404,12 @@ const LearningScreen = ({ stepData, stepIndex, totalSteps, onNext }) => {
       </FadeIn>
 
       {showResult && (
-        <FadeIn delay={100} className="mb-8">
+        <FadeIn delay={100} className="mb-8 space-y-6">
           <div className={`p-6 md:p-8 rounded-2xl border-2 ${stepData.options[selectedOption].isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
             <h4 className={`text-xl font-bold mb-4 flex items-center ${stepData.options[selectedOption].isCorrect ? 'text-green-700' : 'text-red-700'}`}>
               {stepData.options[selectedOption].isCorrect ? 
-                <><CheckCircle2 className="mr-2" /> 正解！素晴らしい！</> : 
-                <><AlertTriangle className="mr-2" /> 惜しい！解説を読んでみよう</>}
+                <><CheckCircle2 className="mr-2" /> 正解！素晴らしい推論力です。</> : 
+                <><AlertTriangle className="mr-2" /> 惜しい！罠に引っかかりました。</>}
             </h4>
             <div className="text-gray-700 leading-relaxed whitespace-pre-line mb-6">
               {stepData.explanation}
@@ -370,8 +420,37 @@ const LearningScreen = ({ stepData, stepIndex, totalSteps, onNext }) => {
               {stepData.illustration()}
             </div>
           </div>
+
+          {/* 詳細解説トグルボタン */}
+          {!showDetailed && (
+             <div className="flex justify-center">
+               <Button onClick={() => setShowDetailed(true)} variant="outline" className="max-w-md">
+                 <BookOpen className="mr-2 w-5 h-5" /> 専門的な仕組みを詳しく学ぶ
+               </Button>
+             </div>
+          )}
+
+          {/* 詳細解説エリア */}
+          {showDetailed && stepData.detailedExplanation && (
+            <FadeIn delay={50}>
+              <div className="bg-slate-800 text-white p-6 md:p-8 rounded-2xl shadow-lg border border-slate-700">
+                <div className="flex items-center mb-6 border-b border-slate-600 pb-4">
+                  <BookOpen className="text-blue-400 w-6 h-6 mr-3" />
+                  <h3 className="text-xl font-bold tracking-wide">{stepData.detailedExplanation.title}</h3>
+                </div>
+                <div className="text-slate-300 leading-relaxed whitespace-pre-line mb-8 text-sm md:text-base">
+                  {stepData.detailedExplanation.content}
+                </div>
+                {stepData.detailedExplanation.illustration && (
+                  <div className="bg-slate-900 rounded-xl p-4">
+                    {stepData.detailedExplanation.illustration()}
+                  </div>
+                )}
+              </div>
+            </FadeIn>
+          )}
           
-          <div className="mt-8 flex justify-center">
+          <div className="pt-8 flex justify-center border-t border-gray-200">
             <Button onClick={onNext} variant="primary" className="max-w-md">
               次のステージへ <ChevronRight className="ml-2 w-5 h-5" />
             </Button>
@@ -384,9 +463,10 @@ const LearningScreen = ({ stepData, stepIndex, totalSteps, onNext }) => {
 
 // 3. 重要な警告：ファイアウォールの死角 画面
 const FirewallScreen = ({ onNext }) => (
+  // 既存のFirewallScreen実装はそのまま
   <FadeIn className="w-full max-w-4xl mx-auto py-8 text-center">
     <div className="inline-block bg-yellow-100 text-yellow-800 px-4 py-1 rounded-full text-sm font-bold mb-6 flex items-center mx-auto w-max">
-      <AlertTriangle className="w-4 h-4 mr-2" /> 最後の超重要ポイント
+      <AlertTriangle className="w-4 h-4 mr-2" /> 重要なポイント
     </div>
     
     <h2 className="text-3xl font-extrabold text-gray-800 mb-8">
@@ -551,6 +631,7 @@ const FirewallScreen = ({ onNext }) => (
 
 // 4. 暗号化（HTTPとHTTPS）の画面
 const EncryptionScreen = ({ onNext }) => (
+  // 既存のEncryptionScreen実装はそのまま
   <FadeIn className="w-full max-w-4xl mx-auto py-8 text-center">
     <div className="inline-block bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-bold mb-6 flex items-center mx-auto w-max">
       <Lock className="w-4 h-4 mr-2" /> 重要な通信の守り方
@@ -701,6 +782,7 @@ const EncryptionScreen = ({ onNext }) => (
 
 // 5. ボットネット・DDoS攻撃の画面
 const BotnetScreen = ({ onNext }) => (
+  // 既存のBotnetScreen実装はそのまま
   <FadeIn className="w-full max-w-4xl mx-auto py-8 text-center">
     <div className="inline-block bg-purple-100 text-purple-800 px-4 py-1 rounded-full text-sm font-bold mb-6 flex items-center mx-auto w-max">
       <Network className="w-4 h-4 mr-2" /> 被害者から加害者へ
@@ -900,7 +982,7 @@ const ChallengeScreen = ({ questions, onComplete }) => {
   );
 };
 
-// 5. 結果発表画面
+// 7. 結果発表画面
 const ResultScreen = ({ score, total, mistakes, onRetry, onRestart }) => {
   const isPerfect = score === total;
 
@@ -1020,7 +1102,7 @@ export default function App() {
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center text-blue-700 font-bold text-lg">
           <ShieldCheck className="w-6 h-6 mr-2" />
-          <span>情報Ⅰ セキュリティ道場</span>
+          <span>情報Ⅰ セキュリティ道場 (Advanced)</span>
         </div>
         {phase === 'learning' && (
            <div className="text-sm text-gray-500 font-medium bg-gray-100 px-3 py-1 rounded-full">
@@ -1080,7 +1162,7 @@ export default function App() {
       </main>
 
       <footer className="py-6 text-center text-gray-400 text-sm">
-        <p>© ネットワークセキュリティ学習コンテンツ</p>
+        <p>© 高度ネットワークセキュリティ学習コンテンツ</p>
       </footer>
     </div>
   );
